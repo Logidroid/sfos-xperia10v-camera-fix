@@ -12,21 +12,27 @@ provider cannot hang suspend / drain the battery. Without that process,
 
 ## What this does
 
-Starts `/vendor/bin/hw/android.hardware.camera.provider@2.5-service_64` as a
-**user** systemd service after the session is up (same idea as the community
-workaround), plus optional CamX overrides loaded from `~/camera-fix/`.
+1. Starts `/vendor/bin/hw/android.hardware.camera.provider@2.5-service_64` as a
+   **user** systemd service after the session is up.
+2. Optional CamX overrides from `~/camera-fix/`.
+3. **Lens guard** + UI labels: rear **1.0** (OIS) and **0.6/tele** (actuator I2C)
+   black the viewfinder and can stick `deviceId`. Install hides those buttons and
+   snaps back to the working ultrawide (`deviceId` 3) if you hit a broken id.
 
-## Known limits (10 V)
+## Known limits (10 V) — verified on device + community
 
-| Lens (UI) | Status |
-|-----------|--------|
-| Front (selfie) | Works with this fix |
-| Rear 1.0× (main / IMX582) | Often fails (OIS / `cam_vaf`) |
-| Rear “0.6” / tele | Often fails (I2C) |
-| Rear “2.0” / ultrawide | May work depending on blobs |
+| `deviceId` | Physical lens | Stock UI label | Status |
+|------------|---------------|----------------|--------|
+| 1 | Front 8 MP | (front) | Works |
+| 3 | Ultrawide 16 mm | often shown as **2.0** | Works |
+| 0 | Main 48 MP IMX582 | **1.0** | Fails: OIS / `cam_vaf` |
+| 2 | Tele 54 mm | **0.6** | Fails: actuator I2C NACK |
 
-Video may still crash the app. Stock Android OEM blobs (`v4b` vs Jolla A14)
-affect which lenses work.
+True **three optical FOVs** need a kernel/blob fix for OIS + tele actuator.
+Nobody has published that for the Jolla 10 V port yet (forum thread still open).
+Use pinch **digital zoom** on the ultrawide for approximate FOV for now.
+
+Video may still crash the app. Blobs (`v4b` vs Jolla A14) change reliability.
 
 ## Install (on the phone)
 
