@@ -1,0 +1,6 @@
+logInfoMask=0
+systemLogEnable=TRUE
+multiCameraEnable=TRUE
+forceDisableUBWCOnIfeIpeLink=TRUE
+enableUBWCNV124ROnIFEFullOutIPELink=FALSE
+overrideDisableZSL=TRUE
